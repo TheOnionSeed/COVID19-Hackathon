@@ -1,0 +1,60 @@
+.center {
+    text-align: center;
+}
+
+.mapcontainer{
+    position: relative;
+}
+
+.centermap{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.centerChart{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.chartContainer{
+
+}
+.hTopMargin{
+    margin-top: 3em;
+}
+
+.resetBtn {
+    /*padding: 5px 25px;*/
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    /*margin: 4px 2px;*/
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: transparent; 
+    color: white; 
+    border: 2px solid #4CAF50;
+    border-radius: 20%;
+    margin-top:1em;
+}
+
+.resetBtn:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+.NunitoFont{
+    font-family: Nunito;
+    color: #d9d9d9;
+}
+ 
+@font-face {
+   font-family: Nunito;
+   src: url(Nunito-Regular.ttf);
+}
