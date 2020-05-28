@@ -9,8 +9,43 @@ import matplotlib.pyplot as plt
 import base64
 import pandas as pd
 import datetime
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='{}/static'.format(os.getenv("NB_PREFIX")))
 #app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+if os.getenv("NB_PREFIX"):
+    PREFIX = os.getenv("NB_PREFIX")
+    from flask import url_for, send_from_directory
+    from flask_reverse_proxy_fix.middleware import ReverseProxyPrefixFix
+    app.config['REVERSE_PROXY_PATH'] = PREFIX
+    ReverseProxyPrefixFix(app)
+
+
+#from flask import send_from_directory
+#
+## set the project root directory as the static folder, you can set others.
+#app = Flask(__name__, static_url_path='')
+#
+#@app.route('/js/<path:path>')
+#def send_js(path):
+#    return send_from_directory('js', path)
+#
+#
+#class PrefixMiddleware(object):
+#    def __init__(self, app, prefix=''):
+#        self.app = app
+#        self.prefix = prefix
+#
+#    def __call__(self, environ, start_response):
+#        if environ['PATH_INFO'].startswith(self.prefix):
+#            environ['PATH_INFO'] = environ['PATH_INFO'][len(self.prefix):]
+#            environ['SCRIPT_NAME'] = self.prefix
+#            return self.app(environ, start_response)
+#        else:
+#            start_response('404', [('Content-Type', 'text/plain')])
+#            return [f"This url does not belong to the app. NB_PREFIX={self.prefix}".encode()]
+#
+#app.wsgi_app = PrefixMiddleware(app.wsgi_app, prefix=os.getenv("NB_PREFIX"))
+
 
 @app.route("/")
 def main():
@@ -112,4 +147,4 @@ def getAllSales(caseCol):
    return (np.add(np.add(salesCountOn,salesCountAb),salesCountQc))
 
 if __name__ == "__main__":
-   app.run(debug=True,host="0.0.0.0",port=80)
+   app.run(debug=True,host="0.0.0.0",port=8888)
