@@ -9,15 +9,24 @@ import matplotlib.pyplot as plt
 import base64
 import pandas as pd
 import datetime
-app = Flask(__name__, static_url_path='{}/static'.format(os.getenv("NB_PREFIX")))
-#app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 if os.getenv("NB_PREFIX"):
     PREFIX = os.getenv("NB_PREFIX")
+else:
+    PREFIX = ""
+
+app = Flask(__name__, static_url_path=f'{PREFIX}/static')
+
+#app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+if PREFIX:
     from flask import url_for, send_from_directory
     from flask_reverse_proxy_fix.middleware import ReverseProxyPrefixFix
     app.config['REVERSE_PROXY_PATH'] = PREFIX
     ReverseProxyPrefixFix(app)
+
+
 
 DATASET = os.path.join(
     app.root_path,
