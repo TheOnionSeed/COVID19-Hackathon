@@ -19,6 +19,10 @@ if os.getenv("NB_PREFIX"):
     app.config['REVERSE_PROXY_PATH'] = PREFIX
     ReverseProxyPrefixFix(app)
 
+DATASET = os.path.join(
+    app.root_path,
+    'hackdata.xlsx'
+)
 
 #from flask import send_from_directory
 #
@@ -94,7 +98,7 @@ def chart_req():
 
 # Get Covid-19 Cases
 def getCaseByProv(provCode,caseCol):
-   dfs = pd.read_excel('hackdata.xlsx', sheet_name='Covid_Info')
+   dfs = pd.read_excel(DATASET, sheet_name='Covid_Info')
    dfs=dfs.loc[(dfs['Location_Code']==provCode)]
 
    return(dfs['Date'].to_numpy(),dfs[caseCol].tolist())
@@ -110,8 +114,8 @@ def getAllCases(caseCol):
 def getEmpByProv(provCode,empCol):
    if(provCode=='all'):
       return
-   df_emp = pd.read_excel('hackdata.xlsx', sheet_name='Store_Employment')
-   df_store = pd.read_excel('hackdata.xlsx', sheet_name='Store_Info')
+   df_emp = pd.read_excel(DATASET, sheet_name='Store_Employment')
+   df_store = pd.read_excel(DATASET, sheet_name='Store_Info')
 
    df_store= df_store[['Store_ID','Location_Code']]
    
@@ -131,8 +135,8 @@ def getAllEmp(caseCol):
 def getSalesByProv(provCode,saleCol):
    if(provCode=='all'):
       return
-   df_sale = pd.read_excel('hackdata.xlsx', sheet_name='Sales')
-   df_store = pd.read_excel('hackdata.xlsx', sheet_name='Store_Info')
+   df_sale = pd.read_excel(DATASET, sheet_name='Sales')
+   df_store = pd.read_excel(DATASET, sheet_name='Store_Info')
 
    df_store= df_store[['Store_ID','Location_Code']]
    df_sale=df_sale.merge(df_store, left_on='Store_ID', right_on='Store_ID')
